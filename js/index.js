@@ -76,52 +76,56 @@ function renderWhiteSauce() {
 function renderGlutenFreeCrust() {
   const crustBase = document.querySelector('.crust')
 
-    if (state.glutenFreeCrust) {
-      crustBase.classList.add('crust-gluten-free')
-    }else {
-      crustBase.classList.remove('crust-gluten-free')
-    }
+  if (state.glutenFreeCrust) {
+    crustBase.classList.add('crust-gluten-free')
+  } else {
+    crustBase.classList.remove('crust-gluten-free')
   }
+}
 
 
 function renderButtons() {
   const allButtons = document.querySelectorAll(".btn");
+
   Array.from(allButtons).forEach((button) => {
     const buttonText = button.innerText;
     const key = Object.keys(ingredients).find(key => {
       return ingredients[key].name === buttonText;
     })
+
     const ingredientState = state[key];
+
     if (ingredientState) {
       button.classList.add("active");
     } else {
       button.classList.remove("active");
     }
   })
-  
+
 }
 
 function renderPrice() {
   // Iteration 4: change the HTML of `<aside class="panel price">`
-   const priceUl = document.querySelector('aside.price ul')
+  const priceUl = document.querySelector('aside.price ul')
   priceUl.innerHTML = '';
 
-  const activeIngredients = Object.keys(state).filter(( key ) => {
+  const activeIngredients = Object.keys(state).filter((key) => {
     return state[key] === true;
   })
+
   let price = basePrice;
-  activeIngredients.forEach( (key) => {
+
+  activeIngredients.forEach((key) => {
     const value = ingredients[key];
     price += value.price;
     const priceItem = document.createElement('li')
     priceItem.textContent = `$${value.price} ${value.name}`
     priceUl.appendChild(priceItem);
-  } )
+  })
+
   const priceElement = document.querySelector('aside.price strong')
   priceElement.textContent = `$${price}`;
 
- 
-  
 }
 
 renderEverything();
